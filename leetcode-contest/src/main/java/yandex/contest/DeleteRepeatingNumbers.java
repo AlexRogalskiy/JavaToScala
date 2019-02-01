@@ -1,34 +1,35 @@
 package yandex.contest;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class DeleteRepeatingNumbers {
-
-
     public static void main(String[] args) throws IOException {
+        StringBuilder sb = new StringBuilder();
         try (Scanner sc = new Scanner(
-                new FileInputStream("input.txt"), "UTF-8");
-             Writer writer = new BufferedWriter(
-                     new OutputStreamWriter(
-                             new FileOutputStream("output.txt"), "utf-8"))) {
+                new FileInputStream("input.txt"), "UTF-8")) {
             int n = sc.nextInt();
             int prevInt = 0;
 
             if (n != 0) {
                 prevInt = sc.nextInt();
-                writer.write(String.valueOf(prevInt));
+                sb.append(String.valueOf(prevInt));
             }
             for (int i = 0; i < n - 1; i++) {
                 int next = sc.nextInt();
                 if (next != prevInt) {
-                    writer.write(System.getProperty("line.separator"));
-                    writer.write(String.valueOf(next));
+                    sb.append(System.getProperty("line.separator"));
+                    sb.append(String.valueOf(next));
                     prevInt = next;
                 }
             }
         }
+
+        System.gc();
+
+        try(FileWriter writer = new FileWriter("output.txt",true)) {
+            writer.append(sb);
+        }
+
     }
 }
